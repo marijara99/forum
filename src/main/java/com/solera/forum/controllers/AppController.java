@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping
@@ -19,12 +20,12 @@ public class AppController {
     private ForumUsersDAO forumUsersDAO;
 
     @GetMapping("/getUsers")
-    public ResponseEntity<List<ForumUsers>> getUsers(){
+    public ResponseEntity<List<ForumUsers>> getUsers() {
 
         return new ResponseEntity<>(forumUsersDAO.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/addUser")
+    @PostMapping("/add")
     public ResponseEntity<Integer> addUser(@RequestBody ForumUsers user) throws SQLException {
 
         String name = user.getName();
@@ -32,13 +33,13 @@ public class AppController {
 
         //0 if email is bad, 1 if name is bad, 2 if everything is ok
 
-        if (forumUsersDAO.existsForumUsersByEmail(email)){
+        if (forumUsersDAO.existsForumUsersByEmail(email)) {
 
             return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST);
 
-        }else if(forumUsersDAO.existsForumUsersByName(name)){
+        } else if (forumUsersDAO.existsForumUsersByName(name)) {
             return new ResponseEntity<>(1, HttpStatus.BAD_REQUEST);
-        }else {
+        } else {
             ForumUsers newUser = forumUsersDAO.save(user);
             return new ResponseEntity<>(2, HttpStatus.OK);
 
@@ -46,31 +47,32 @@ public class AppController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<List<ForumUsers>> deleteUser(@RequestBody ForumUsers user){
+    public ResponseEntity<List<ForumUsers>> deleteUser(@RequestBody ForumUsers user) {
         forumUsersDAO.deleteById(user.getId());
         return new ResponseEntity<>(forumUsersDAO.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/updateUser")
-    public ResponseEntity<Integer> updateUser(@RequestBody ForumUsers user){
+    @PostMapping("/update")
+    public ResponseEntity<Boolean> updateUser(@RequestBody ForumUsers user) {
 
         String email = user.getEmail();
         String name = user.getName();
 
-        if (forumUsersDAO.existsForumUsersByEmail(email)){
-            //MIRAR VIDEO PARA UPDATE EL USER
-            return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST);
+        Optional<ForumUsers> updateUser = forumUsersDAO.findById(user.getId());
 
-        }else if(forumUsersDAO.existsForumUsersByName(name)){
-            return new ResponseEntity<>(1, HttpStatus.BAD_REQUEST);
-        }else {
-            ForumUsers newUser = forumUsersDAO.save(user);
-            return new ResponseEntity<>(2, HttpStatus.OK);
+        if (updateUser.isPresent()){
+            ForumUsers updatedUser = updateUser.get();
+            updatedUser.setName(user.getName());
+            updatedUser.setEmail(user.getEmail());
+            updatedUser.setPassword(user.getPassword());
 
+            forumUsersDAO.save(updatedUser);
+            return new ResponseEntity<>(true, HttpStatus.OK); //FOUND AND UPDATED
+
+        } else{
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);//NOT FOUND
         }
 
     }
-
-
 
 }
