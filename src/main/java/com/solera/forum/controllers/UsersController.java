@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping
-public class AppController {
+public class UsersController {
     @Autowired
     private ForumUsersDAO forumUsersDAO;
 

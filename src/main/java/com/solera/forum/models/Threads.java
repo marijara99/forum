@@ -7,18 +7,12 @@ import javax.persistence.*;
 @Table(name="Threads")
 public class Threads {
 
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     @Column
     private String title;
-
-    @Column
-    private String author;
-
-    @Column
-    private String date;
 
     public Threads() {
     }
@@ -39,19 +33,4 @@ public class Threads {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
 }

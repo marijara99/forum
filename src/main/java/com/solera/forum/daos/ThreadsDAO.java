@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ThreadsDAO extends JpaRepository<Threads, Long> {
+    boolean existsThreadsByTitle (String title);
+
+
 }
