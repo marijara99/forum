@@ -26,7 +26,7 @@ public class UsersController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Integer> addUser(@RequestBody ForumUsers user) throws SQLException {
+    public ResponseEntity<Integer> addUser(@RequestBody ForumUsers user) {
 
         String name = user.getName();
         String email = user.getEmail();
@@ -34,7 +34,6 @@ public class UsersController {
         //0 if email is bad, 1 if name is bad, 2 if everything is ok
 
         if (forumUsersDAO.existsForumUsersByEmail(email)) {
-
             return new ResponseEntity<>(0, HttpStatus.BAD_REQUEST);
 
         } else if (forumUsersDAO.existsForumUsersByName(name)) {

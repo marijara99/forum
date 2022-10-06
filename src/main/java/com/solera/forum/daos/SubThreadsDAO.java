@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface SubThreadsDAO extends JpaRepository<SubThreads, Long> {
 
-    List<SubThreads> FindSubThreadsByMainThreadId(Long mainThreadId);
+    List<SubThreads> findSubThreadsByMainThreadId(Long mainThreadId);
+    boolean existsSubThreadsByTitle (String title);
 }
