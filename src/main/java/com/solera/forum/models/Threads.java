@@ -14,6 +14,9 @@ public class Threads {
     @Column
     private String title;
 
+    @Column (length = 300)
+    private String description;
+
     public Threads() {
     }
 
@@ -33,4 +36,11 @@ public class Threads {
         this.title = title;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
