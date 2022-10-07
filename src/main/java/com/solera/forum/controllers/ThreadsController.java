@@ -17,7 +17,7 @@ public class ThreadsController {
     private ThreadsService threadsService; //Inyección de dependencias
 
     @PostMapping("/newMainThread")
-    public ResponseEntity<Boolean> addThread(Threads thread) {
+    public ResponseEntity<Boolean> addThread(@RequestBody Threads thread) {
        return threadsService.addThread(thread);
     }
 

@@ -37,7 +37,7 @@ public class UsersServiceImpl implements UsersService {
         } else if (forumUsersDAO.existsForumUsersByName(name)) {
             return new ResponseEntity<>(1, HttpStatus.BAD_REQUEST);
         } else {
-            ForumUsers newUser = forumUsersDAO.save(user);
+            forumUsersDAO.save(user);
             return new ResponseEntity<>(2, HttpStatus.OK);
 
         }

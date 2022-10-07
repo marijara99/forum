@@ -54,14 +54,12 @@ public class ThreadsServiceImpl implements ThreadsService {
     public ResponseEntity<List<SubThreads>> getSubThreads(Long mainId) {
         //It asks for the id of the main thread
         List<SubThreads> subThreads = subThreadsDAO.findSubThreadsByMainThreadId(mainId);
-
         return new ResponseEntity<>(subThreads, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Boolean> addThread(Threads thread) {
         String title = thread.getTitle();
-
         if (threadsDAO.existsThreadsByTitle(title)) { //Already exists
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         } else {
