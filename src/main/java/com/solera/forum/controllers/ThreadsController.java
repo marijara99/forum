@@ -10,6 +10,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/threads")
+@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
+
 public class ThreadsController {
     @Autowired
     private ThreadsService threadsService; //Inyección de dependencias

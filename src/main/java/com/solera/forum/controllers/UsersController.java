@@ -12,6 +12,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping
+@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
+
 public class UsersController {
 
     @Autowired //It looks for the class that IMPLEMENTS UsersService --> UsersServiceImpl
